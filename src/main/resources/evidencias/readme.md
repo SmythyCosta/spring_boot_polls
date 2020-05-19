@@ -1,5 +1,8 @@
 
+# run app
+	mvn spring-boot:run
 
+# signup
 POST   http://localhost:5000/api/auth/signup
 
 {
@@ -10,7 +13,7 @@ POST   http://localhost:5000/api/auth/signup
 }
 
 
-
+# signin
 POST   http://localhost:5000/api/auth/signin
 
 {
@@ -18,38 +21,43 @@ POST   http://localhost:5000/api/auth/signin
 	"password":"123456"
 }
 
+# Authorization
 eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTg5ODE0MTUyLCJleHAiOjE1OTA0MTg5NTJ9.vKYKp7APZTCjIdRHhgApI3dl_jhmvp9_gQfLYZzAWd_7z1lExBm50ISMRfv5w83PX3SylpCDOJsvCboEa47Mqg
-
 
 Authorization: Bearer <accessToken>
 
 
-	mvn spring-boot:run
+# add polls
+POST   http://localhost:5000/api/polls
 
-
-
-
-
-POST   http://localhost:5000/api/auth/signup
-
-{
-"question": "melho time do brasil",
-"choices": [
-    {
-        "text": "flamengo"
-    },
-    {
-        "text": "palmeiras"
-    }
-],
-"pollLength":
+	{
+	"question": "melho time do brasil",
+	"choices": [
 	    {
-        "days": 21,
-        "hours": 12
-    	}
-}
+	        "text": "flamengo"
+	    },
+	    {
+	        "text": "palmeiras"
+	    }
+	],
+	"pollLength":
+		    {
+	        "days": 21,
+	        "hours": 12
+	    	}
+	}
 
 
+# vote
+POST  http://localhost:5000/api/polls/1/votes
+
+	{
+	"choiceId": 1
+	}
+
+
+
+# exemple mysql timestamp
 2020-05-18 11:32:15
 2020-05-25 11:32:15
 
