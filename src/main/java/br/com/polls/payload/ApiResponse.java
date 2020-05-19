@@ -1,4 +1,4 @@
-package br.com.polls.playload;
+package br.com.polls.payload;
 
 public class ApiResponse {
 

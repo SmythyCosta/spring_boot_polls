@@ -1,4 +1,4 @@
-package br.com.polls.playload;
+package br.com.polls.payload;
 
 import javax.validation.constraints.NotBlank;
 
