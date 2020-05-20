@@ -28,6 +28,10 @@ Authorization: Bearer <accessToken>
 
 
 # add polls
+
+GET   http://localhost:5000/api/polls
+GET   http://localhost:5000/api/polls/pollId
+
 POST   http://localhost:5000/api/polls
 
 	{
@@ -47,8 +51,6 @@ POST   http://localhost:5000/api/polls
 	    	}
 	}
 
-
-# vote
 POST  http://localhost:5000/api/polls/1/votes
 
 	{

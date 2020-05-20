@@ -15,7 +15,8 @@ import java.util.List;
 @Entity
 @Table(name = "polls")
 public class Poll extends UserDateAudit {
-    @Id
+    
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

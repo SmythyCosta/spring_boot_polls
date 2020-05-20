@@ -47,7 +47,8 @@ public class PollService {
     private static final Logger logger = LoggerFactory.getLogger(PollService.class);
 
     public PagedResponse<PollResponse> getAllPolls(UserPrincipal currentUser, int page, int size) {
-        validatePageNumberAndSize(page, size);
+        
+    	validatePageNumberAndSize(page, size);
 
         // Retrieve Polls
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
@@ -76,7 +77,8 @@ public class PollService {
     }
 
     public PagedResponse<PollResponse> getPollsCreatedBy(String username, UserPrincipal currentUser, int page, int size) {
-        validatePageNumberAndSize(page, size);
+        
+    	validatePageNumberAndSize(page, size);
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
@@ -107,7 +109,8 @@ public class PollService {
     }
 
     public PagedResponse<PollResponse> getPollsVotedBy(String username, UserPrincipal currentUser, int page, int size) {
-        validatePageNumberAndSize(page, size);
+        
+    	validatePageNumberAndSize(page, size);
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
@@ -163,7 +166,8 @@ public class PollService {
     }
 
     public PollResponse getPollById(Long pollId, UserPrincipal currentUser) {
-        Poll poll = pollRepository.findById(pollId).orElseThrow(
+        
+    	Poll poll = pollRepository.findById(pollId).orElseThrow(
                 () -> new ResourceNotFoundException("Poll", "id", pollId));
 
         // Retrieve Vote Counts of every choice belonging to the current poll
@@ -187,7 +191,8 @@ public class PollService {
     }
 
     public PollResponse castVoteAndGetUpdatedPoll(Long pollId, VoteRequest voteRequest, UserPrincipal currentUser) {
-        Poll poll = pollRepository.findById(pollId)
+        
+    	Poll poll = pollRepository.findById(pollId)
                 .orElseThrow(() -> new ResourceNotFoundException("Poll", "id", pollId));
 
         if(poll.getExpirationDateTime().isBefore(Instant.now())) {
@@ -230,7 +235,8 @@ public class PollService {
 
 
     private void validatePageNumberAndSize(int page, int size) {
-        if(page < 0) {
+        
+    	if(page < 0) {
             throw new BadRequestException("Page number cannot be less than zero.");
         }
 
@@ -240,7 +246,8 @@ public class PollService {
     }
 
     private Map<Long, Long> getChoiceVoteCountMap(List<Long> pollIds) {
-        // Retrieve Vote Counts of every Choice belonging to the given pollIds
+        
+    	// Retrieve Vote Counts of every Choice belonging to the given pollIds
         List<ChoiceVoteCount> votes = voteRepository.countByPollIdInGroupByChoiceId(pollIds);
 
         Map<Long, Long> choiceVotesMap = votes.stream()
@@ -250,7 +257,8 @@ public class PollService {
     }
 
     private Map<Long, Long> getPollUserVoteMap(UserPrincipal currentUser, List<Long> pollIds) {
-        // Retrieve Votes done by the logged in user to the given pollIds
+        
+    	// Retrieve Votes done by the logged in user to the given pollIds
         Map<Long, Long> pollUserVoteMap = null;
         if(currentUser != null) {
             List<Vote> userVotes = voteRepository.findByUserIdAndPollIdIn(currentUser.getId(), pollIds);
@@ -262,7 +270,8 @@ public class PollService {
     }
 
     Map<Long, User> getPollCreatorMap(List<Poll> polls) {
-        // Get Poll Creator details of the given list of polls
+       
+    	// Get Poll Creator details of the given list of polls
         List<Long> creatorIds = polls.stream()
                 .map(Poll::getCreatedBy)
                 .distinct()
