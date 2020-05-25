@@ -22,7 +22,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Profile("dev")
 @EnableSwagger2
 public class SwaggerConfig {
-
+	
+	@Bean
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors.basePackage("br.com.polls.controller"))
+				.paths(PathSelectors.any()).build()
+				.apiInfo(apiInfo());
+	}
+	
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder().title("Polls API")
+				.description("API documentation for accessing the endpoints of Polls System.").version("1.0")
+				.build();
+	}
 
 }
 
