@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-
+import br.com.polls.security.util.JwtTokenUtil;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -22,6 +22,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Profile("dev")
 @EnableSwagger2
 public class SwaggerConfig {
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 	
 	@Bean
 	public Docket api() {
@@ -41,14 +47,13 @@ public class SwaggerConfig {
 	public SecurityConfiguration security() {
 		String token;
 		try {
-			UserDetails userDetails = this.userDetailsService.loadUserByUsername("admin@kazale.com");
+			UserDetails userDetails = this.userDetailsService.loadUserByUsername("smythy.costa@gmail.com");
 			token = this.jwtTokenUtil.obterToken(userDetails);
 		} catch (Exception e) {
 			token = "";
 		}
 
-		return new SecurityConfiguration(null, null, null, null, "Bearer " + token, ApiKeyVehicle.HEADER,
-				"Authorization", ",");
+		return new SecurityConfiguration(null, null, null, null, "Bearer " + token, ApiKeyVehicle.HEADER, "Authorization", ",");
 	}
 	
 }
