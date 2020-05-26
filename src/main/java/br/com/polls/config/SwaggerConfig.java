@@ -28,7 +28,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 	
-	
 	@Autowired
     AuthenticationManager authenticationManager;
 	
@@ -36,7 +35,6 @@ public class SwaggerConfig {
     JwtTokenProvider tokenProvider;
 	
 	@Bean
-	@Order(1)
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("br.com.polls.controller"))
