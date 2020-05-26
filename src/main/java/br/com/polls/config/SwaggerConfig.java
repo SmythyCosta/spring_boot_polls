@@ -3,6 +3,7 @@ package br.com.polls.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,9 +24,8 @@ import springfox.documentation.swagger.web.SecurityConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-//@Profile("dev")
+@Profile("dev")
 @EnableSwagger2
-@Order
 public class SwaggerConfig {
 	
 	
@@ -36,12 +36,12 @@ public class SwaggerConfig {
     JwtTokenProvider tokenProvider;
 	
 	@Bean
-    @Order(0)
 	public SecurityConfiguration security() {
 		
 		String token = null;
-		 //String token2 = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTkwNDA5OTgxLCJleHAiOjE1OTEwMTQ3ODF9.aS869tELsEnOvLQzpZczeUqVRfyG3gK8owdckM5whmrzTkATe9wIS5bP66V2aq6kAxhCx-cqy-91PEg3svcB8g";
+		token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTkwNDA5OTgxLCJleHAiOjE1OTEwMTQ3ODF9.aS869tELsEnOvLQzpZczeUqVRfyG3gK8owdckM5whmrzTkATe9wIS5bP66V2aq6kAxhCx-cqy-91PEg3svcB8g";
 		
+		/*
 		 LoginRequest loginMock = new LoginRequest("smythy.costa@gmail.com", "123456");
 		 try {
 			
@@ -54,15 +54,13 @@ public class SwaggerConfig {
 
 		    SecurityContextHolder.getContext().setAuthentication(authentication);
 		    token = tokenProvider.generateToken(authentication);
-		    
-		    System.out.println("Debug => Seccess Moc Swagger Token : "+token);
+		    System.out.println("Success Mock for Swagger Token : "+token);
 		    
 		} catch (Exception e) {
 			token = "";
-			System.out.println("Debug => Erro ao usar os dados do user para mocar o token : "+e);
+			System.out.println("Error when using user data to move the token : "+e);
 		}
-    
-		 System.out.println("Debug => SwaggerConfig class => Token : "+ token);
+    	*/
 		return new SecurityConfiguration(null, null, null, null, "Bearer " + token, ApiKeyVehicle.HEADER, "Authorization", ",");
 	}
 	
