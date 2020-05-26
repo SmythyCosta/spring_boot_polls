@@ -36,11 +36,25 @@ public class SwaggerConfig {
     JwtTokenProvider tokenProvider;
 	
 	@Bean
+	@Order(1)
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors.basePackage("br.com.polls.controller"))
+				.paths(PathSelectors.any()).build()
+				.apiInfo(apiInfo());
+	}
+	
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder().title("Polls API")
+				.description("API documentation for accessing the endpoints of Polls System.").version("1.0")
+				.build();
+	}
+	
+	@Bean
 	public SecurityConfiguration security() {
 		
 		String token = null;
 		token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTkwNDA5OTgxLCJleHAiOjE1OTEwMTQ3ODF9.aS869tELsEnOvLQzpZczeUqVRfyG3gK8owdckM5whmrzTkATe9wIS5bP66V2aq6kAxhCx-cqy-91PEg3svcB8g";
-		
 		/*
 		 LoginRequest loginMock = new LoginRequest("smythy.costa@gmail.com", "123456");
 		 try {
@@ -63,26 +77,6 @@ public class SwaggerConfig {
     	*/
 		return new SecurityConfiguration(null, null, null, null, "Bearer " + token, ApiKeyVehicle.HEADER, "Authorization", ",");
 	}
-	
-	
-	
-	@Bean
-	@Order(1)
-	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("br.com.polls.controller"))
-				.paths(PathSelectors.any()).build()
-				.apiInfo(apiInfo());
-	}
-	
-	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Polls API")
-				.description("API documentation for accessing the endpoints of Polls System.").version("1.0")
-				.build();
-	}
-	
-	
-	
 	
 }
 
