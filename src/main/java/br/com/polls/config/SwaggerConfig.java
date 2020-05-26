@@ -3,10 +3,14 @@ package br.com.polls.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import br.com.polls.payload.LoginRequest;
+import br.com.polls.security.JwtTokenProvider;
 import br.com.polls.security.util.JwtTokenUtil;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -19,17 +23,53 @@ import springfox.documentation.swagger.web.SecurityConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@Profile("dev")
+//@Profile("dev")
 @EnableSwagger2
+@Order
 public class SwaggerConfig {
 	
-	@Autowired
-	private UserDetailsService userDetailsService;
 	
 	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+    AuthenticationManager authenticationManager;
+	
+	@Autowired
+    JwtTokenProvider tokenProvider;
 	
 	@Bean
+    @Order(0)
+	public SecurityConfiguration security() {
+		
+		String token = null;
+		 //String token2 = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTkwNDA5OTgxLCJleHAiOjE1OTEwMTQ3ODF9.aS869tELsEnOvLQzpZczeUqVRfyG3gK8owdckM5whmrzTkATe9wIS5bP66V2aq6kAxhCx-cqy-91PEg3svcB8g";
+		
+		 LoginRequest loginMock = new LoginRequest("smythy.costa@gmail.com", "123456");
+		 try {
+			
+			 Authentication authentication = authenticationManager.authenticate(
+		                new UsernamePasswordAuthenticationToken(
+		                		loginMock.getUsernameOrEmail(),
+		                		loginMock.getPassword()
+		                )
+		        );
+
+		    SecurityContextHolder.getContext().setAuthentication(authentication);
+		    token = tokenProvider.generateToken(authentication);
+		    
+		    System.out.println("Debug => Seccess Moc Swagger Token : "+token);
+		    
+		} catch (Exception e) {
+			token = "";
+			System.out.println("Debug => Erro ao usar os dados do user para mocar o token : "+e);
+		}
+    
+		 System.out.println("Debug => SwaggerConfig class => Token : "+ token);
+		return new SecurityConfiguration(null, null, null, null, "Bearer " + token, ApiKeyVehicle.HEADER, "Authorization", ",");
+	}
+	
+	
+	
+	@Bean
+	@Order(1)
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("br.com.polls.controller"))
@@ -43,18 +83,8 @@ public class SwaggerConfig {
 				.build();
 	}
 	
-	@Bean
-	public SecurityConfiguration security() {
-		String token;
-		try {
-			UserDetails userDetails = this.userDetailsService.loadUserByUsername("smythy.costa@gmail.com");
-			token = this.jwtTokenUtil.obterToken(userDetails);
-		} catch (Exception e) {
-			token = "";
-		}
-
-		return new SecurityConfiguration(null, null, null, null, "Bearer " + token, ApiKeyVehicle.HEADER, "Authorization", ",");
-	}
+	
+	
 	
 }
 

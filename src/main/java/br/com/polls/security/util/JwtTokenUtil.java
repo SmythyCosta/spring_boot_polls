@@ -20,6 +20,7 @@ public class JwtTokenUtil {
 	static final String CLAIM_KEY_ROLE = "role";
 	static final String CLAIM_KEY_AUDIENCE = "audience";
 	static final String CLAIM_KEY_CREATED = "created";
+	public static String SWAGGER_JWT_TOKEN = null;
 
 	@Value("${app.jwtSecret}")
 	private String secret;

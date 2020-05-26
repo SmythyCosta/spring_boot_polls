@@ -10,9 +10,20 @@ public class LoginRequest {
     @NotBlank
     private String password;
 
-    public String getUsernameOrEmail() {
+    public LoginRequest() {
+		// TODO Auto-generated constructor stub
+	}
+    
+    public LoginRequest(@NotBlank String usernameOrEmail, @NotBlank String password) {
+		super();
+		this.usernameOrEmail = usernameOrEmail;
+		this.password = password;
+	}
+
+	public String getUsernameOrEmail() {
         return usernameOrEmail;
     }
+    
 
     public void setUsernameOrEmail(String usernameOrEmail) {
         this.usernameOrEmail = usernameOrEmail;
