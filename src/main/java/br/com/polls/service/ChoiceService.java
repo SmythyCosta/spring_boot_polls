@@ -9,7 +9,7 @@ import br.com.polls.model.Choice;
 
 public interface ChoiceService {
 
-	Page<Choice> searchByChoiceId(Long choiceId, PageRequest pageRequest);
+	Page<Choice> searchByPollId(Long choiceId, PageRequest pageRequest);
 	
 	Optional<Choice> searchById(Long id);
 	
