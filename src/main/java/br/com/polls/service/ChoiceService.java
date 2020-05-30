@@ -9,9 +9,9 @@ import br.com.polls.model.Choice;
 
 public interface ChoiceService {
 
-	Page<Choice> buscarPorFuncionarioId(Long choiceId, PageRequest pageRequest);
+	Page<Choice> searchByChoiceId(Long choiceId, PageRequest pageRequest);
 	
-	Optional<Choice> buscarPorId(Long id);
+	Optional<Choice> searchById(Long id);
 	
 	Choice persistir(Choice choice);
 	
