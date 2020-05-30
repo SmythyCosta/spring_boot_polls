@@ -30,9 +30,12 @@ import br.com.polls.payload.SignUpRequest;
 import br.com.polls.repository.RoleRepository;
 import br.com.polls.repository.UserRepository;
 import br.com.polls.security.JwtTokenProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/auth")
+@Api(value="Authentication API", description="autenticacao e registros de novos usuarios.")
 public class AuthController {
 
     @Autowired
@@ -50,6 +53,7 @@ public class AuthController {
     @Autowired
     JwtTokenProvider tokenProvider;
 
+    @ApiOperation(value = "Auttenticação de usuários")
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -66,6 +70,7 @@ public class AuthController {
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
 
+    @ApiOperation(value = "registros de novos usuários")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
     	
