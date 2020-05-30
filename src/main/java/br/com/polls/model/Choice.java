@@ -6,7 +6,15 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+
 @Entity
+@Getter 
+@Setter
+@ToString(onlyExplicitlyIncluded = true)
 @Table(name = "choices")
 public class Choice {
 	
@@ -16,6 +24,7 @@ public class Choice {
 
     @NotBlank
     @Size(max = 40)
+    @ToString.Include
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -28,30 +37,6 @@ public class Choice {
 
     public Choice(String text) {
         this.text = text;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Poll getPoll() {
-        return poll;
-    }
-
-    public void setPoll(Poll poll) {
-        this.poll = poll;
     }
 
     @Override
