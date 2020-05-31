@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+
 
 import br.com.polls.model.Choice;
 import br.com.polls.repository.ChoiceRepository;
@@ -22,7 +24,7 @@ public class ChoiceServiceImpl implements ChoiceService {
 	private ChoiceRepository choiceRepository;
 	
 	@Override
-	public Page<Choice> searchByPollId(Long pollId, PageRequest pageRequest) {
+	public Page<Choice> searchByPollId(Long pollId, Pageable pageRequest) {
 		log.info("Searching for choices by ID {}", pollId);
 		return this.choiceRepository.findByPollId(pollId, pageRequest);
 	}
