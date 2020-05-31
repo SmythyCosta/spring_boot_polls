@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -92,6 +94,23 @@ public class ChoiceController {
 		choice = choiceService.persist(choice);
 		response.setData(this.parseChoiceDto(choice));
 		return ResponseEntity.ok(response);
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	public ResponseEntity<Response<String>> remover(@PathVariable("id") Long id) {
+		logger.info("delete choice: {}", id);
+		Response<String> response = new Response<String>();
+		Optional<Choice> c = this.choiceService.searchById(id);
+
+		if (!c.isPresent()) {
+			logger.info("Error in removing choice ID: {} ", id);
+			response.getErrors().add("Error in removing choice ID. not found id " + id);
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		this.choiceService.remove(id);
+		return ResponseEntity.ok(new Response<String>());
 	}
     
     private ChoiceDto parseChoiceDto(Choice choice) {

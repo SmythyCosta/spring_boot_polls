@@ -20,5 +20,5 @@ public interface ChoiceService {
 	
 	Choice persist(Choice choice);
 	
-	void remover(Long id);
+	void remove(Long id);
 }

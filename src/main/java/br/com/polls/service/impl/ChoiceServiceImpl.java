@@ -42,9 +42,9 @@ public class ChoiceServiceImpl implements ChoiceService {
 	}
 
 	@Override
-	public void remover(Long id) {
-		// TODO Auto-generated method stub
-		
+	public void remove(Long id) {
+		log.info("Removendo o lançamento ID {}", id);
+		this.choiceRepository.deleteById(id);
 	}
 
 
