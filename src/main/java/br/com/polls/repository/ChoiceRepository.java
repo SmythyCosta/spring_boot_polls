@@ -26,5 +26,5 @@ public interface ChoiceRepository extends JpaRepository<Choice, Long> {
 	Page<Choice> findByPollId(@Param("pollId") Long pollId, Pageable pageable);
 
     Optional<Choice> findByPollId(@Param("pollId") Long pollId);
-
+    
 }

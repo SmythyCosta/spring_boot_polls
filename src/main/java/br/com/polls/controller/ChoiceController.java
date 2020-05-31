@@ -103,14 +103,17 @@ public class ChoiceController {
 		Response<String> response = new Response<String>();
 		Optional<Choice> c = this.choiceService.searchById(id);
 
-		if (!c.isPresent()) {
-			logger.info("Error in removing choice ID: {} ", id);
-			response.getErrors().add("Error in removing choice ID. not found id " + id);
-			return ResponseEntity.badRequest().body(response);
+		if (c.isPresent()) {
+		
+			this.choiceService.remove(id);
+			return ResponseEntity.ok(new Response<String>());
 		}
+		
+		logger.info("Error in removing choice ID: {} ", id);
+		response.getErrors().add("Error in removing choice ID. not found id " + id);
+		return ResponseEntity.badRequest().body(response);
 
-		this.choiceService.remove(id);
-		return ResponseEntity.ok(new Response<String>());
+		
 	}
     
     private ChoiceDto parseChoiceDto(Choice choice) {

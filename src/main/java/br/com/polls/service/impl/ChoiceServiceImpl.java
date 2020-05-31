@@ -32,7 +32,7 @@ public class ChoiceServiceImpl implements ChoiceService {
 	@Override
 	public Optional<Choice> searchById(Long id) {
 		log.info("Searching choice by ID {}", id);
-		return Optional.ofNullable(this.choiceRepository.getOne(id)); 
+		return this.choiceRepository.findById(id);
 	}
 
 	@Override
