@@ -31,14 +31,14 @@ public class ChoiceServiceImpl implements ChoiceService {
 
 	@Override
 	public Optional<Choice> searchById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("Searching choice by ID {}", id);
+		return Optional.ofNullable(this.choiceRepository.getOne(id)); 
 	}
 
 	@Override
-	public Choice persistir(Choice choice) {
-		// TODO Auto-generated method stub
-		return null;
+	public Choice persist(Choice choice) {
+		log.info("persist choice: {}", choice);
+		return this.choiceRepository.save(choice);
 	}
 
 	@Override
