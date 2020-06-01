@@ -29,6 +29,7 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -232,6 +233,10 @@ public class PollService {
 
         return ModelMapper.mapPollToPollResponse(poll, choiceVotesMap, creator, vote.getChoice().getId());
     }
+    
+    public Optional<Poll> searchById(Long id) {
+		return Optional.ofNullable(this.pollRepository.getOne(id));
+	}
 
 
     private void validatePageNumberAndSize(int page, int size) {

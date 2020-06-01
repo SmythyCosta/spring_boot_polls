@@ -52,7 +52,7 @@ public class SwaggerConfig {
 	public SecurityConfiguration security() {
 		
 		String token = null;
-		token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTkwNDA5OTgxLCJleHAiOjE1OTEwMTQ3ODF9.aS869tELsEnOvLQzpZczeUqVRfyG3gK8owdckM5whmrzTkATe9wIS5bP66V2aq6kAxhCx-cqy-91PEg3svcB8g";
+		token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTkwOTUwNDIxLCJleHAiOjE1OTE1NTUyMjF9.SbhOIUw-0YfzaSrg-g5bvWqDvH0WtNmtdVx1XSH6QENSHvLXQOIneU-Ro71dHUel9C9ZVqiAe_JOo0L9LhltEg";
 		/*
 		 LoginRequest loginMock = new LoginRequest("smythy.costa@gmail.com", "123456");
 		 try {
