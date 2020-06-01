@@ -27,6 +27,7 @@ import br.com.polls.service.ChoiceService;
 import br.com.polls.service.PollService;
 import br.com.polls.util.AppConstants;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -59,6 +60,7 @@ public class ChoiceController {
      * */
     
     
+    @ApiOperation(value = "lista as opçoes de respostas")
     @GetMapping(value = "/poll/{pollId}")
 	public ResponseEntity<Page<ChoiceDto>> listByPollId(
 			@PathVariable("pollId") Long pollId,
@@ -74,6 +76,7 @@ public class ChoiceController {
 		return ResponseEntity.ok(choicesDto);
 	}
     
+    @ApiOperation(value = "edita a descrição de uma resposta")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Response<ChoiceDto>> update(@PathVariable("id") Long id,
 			@Valid @RequestBody ChoiceDto choiceDto, BindingResult result) throws ParseException {
@@ -96,6 +99,7 @@ public class ChoiceController {
 		return ResponseEntity.ok(response);
 	}
 	
+    @ApiOperation(value = "deleta uma resposta")
 	@DeleteMapping(value = "/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Response<String>> remover(@PathVariable("id") Long id) {
